@@ -2,7 +2,7 @@ import type { InputHTMLAttributes } from "react";
 import clsx from "clsx";
 
 type FormInputProps = {
-    label: string;
+    label?: string;
     id: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,10 +20,14 @@ export const FormInput = ({
                               ...inputProps
                           }: FormInputProps) => {
     return (
-        <div className="mb-4">
-            <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
-                {label}
-            </label>
+        <div className="w-full">
+
+            {label && (
+                <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+                    {label}
+                </label>
+            )}
+
             <input
                 id={id}
                 value={value}

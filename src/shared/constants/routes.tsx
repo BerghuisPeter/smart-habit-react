@@ -1,8 +1,8 @@
-import { Home } from '../pages/Home';
-import Login from '../pages/Login';
-import Dashboard from '../pages/Dashboard';
-import { NotFound } from '../pages/NotFound';
 import type { JSX } from "react";
+import { Home } from "../../pages/Home.tsx";
+import Dashboard from "../../pages/dashboard/Dashboard.tsx";
+import Login from "../../pages/Login.tsx";
+import { NotFound } from "../../pages/NotFound.tsx";
 
 type RouteDef = {
     path: string;

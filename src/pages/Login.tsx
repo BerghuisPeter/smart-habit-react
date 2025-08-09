@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FormInput } from "../components/FormInput";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth.ts";
-import { ROUTE_PATHS } from "../constants/routes.tsx";
+import { useAuth } from "../shared/hooks/useAuth.ts";
+import { ROUTE_PATHS } from "../shared/constants/routes.tsx";
+import { FormInput } from "../shared/components/FormInput.tsx";
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -85,6 +85,7 @@ function Login() {
                     label="Email"
                     type="email"
                     autoComplete="email"
+                    placeholder="test@domain.com"
                     value={email}
                     onChange={handleChange('email')}
                     error={formErrors.email}
@@ -95,6 +96,7 @@ function Login() {
                     label="Password"
                     type="password"
                     autoComplete="current-password"
+                    placeholder="P*ssword123"
                     value={password}
                     onChange={handleChange('password')}
                     error={formErrors.password}

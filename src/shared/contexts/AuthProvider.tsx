@@ -1,6 +1,8 @@
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { jwtDecode } from 'jwt-decode';
+import { LOCAL_STORAGE_TOKEN_KEY } from "../constants/common.ts";
+import HttpClient from "../utils/HttpClient.ts";
 
 type User = {
     email: string;
@@ -9,13 +11,10 @@ type User = {
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const LOCAL_STORAGE_TOKEN_KEY = "smartHabitUserToken";
-
     useEffect(() => {
         const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
         if (token) {
             const decodedUser = jwtDecode<User>(token);
-            console.log(decodedUser);
             setUser(decodedUser);
         }
     }, []);
@@ -65,6 +64,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         [user, login, logout]
     );
 
+    useEffect(() => {
+        HttpClient.setUnauthorizedHandler(logout);
+    }, [logout]);
 
     return (
         <AuthContext.Provider value={authValue}>

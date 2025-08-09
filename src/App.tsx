@@ -1,10 +1,10 @@
 import './App.css'
 import { Route, Routes } from "react-router-dom";
-import { Navbar } from "./components/Navbar.tsx";
-import { ROUTES } from "./constants/routes.tsx";
 import { PrivateRouteGuard } from "./guards/PrivateRouteGuard.tsx";
 import { PublicOnlyRouteGuard } from "./guards/PublicOnlyRouteGuard.tsx";
-import RouteTitleTracker from "./components/RouteTitleTracker.tsx";
+import RouteTitleTracker from "./shared/components/RouteTitleTracker.tsx";
+import { Navbar } from "./shared/components/Navbar.tsx";
+import { ROUTES } from "./shared/constants/routes.tsx";
 
 function App() {
 
