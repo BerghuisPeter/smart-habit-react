@@ -8,6 +8,9 @@ type HabitListProps = {
 };
 
 function HabitList({ habits, onToggle, onDelete, onEdit }: Readonly<HabitListProps>) {
+
+    console.log("habits list rendered")
+
     if (!habits.length)
         return <p className="text-gray-500">No habits yet. Add your first one above ✨</p>;
 
