@@ -1,4 +1,5 @@
 import type { Habit } from "../model/types.ts";
+import { HabitItem } from "./HabitItem.tsx";
 
 type HabitListProps = {
     habits: Habit[];
@@ -17,36 +18,16 @@ function HabitList({ habits, onToggle, onDelete, onEdit }: Readonly<HabitListPro
     return (
         <ul className="divide-y">
             {habits.map(h => (
-                <li key={h.id} className="flex items-center justify-between py-3">
-                    <label className="flex items-center gap-3">
-                        <input
-                            type="checkbox"
-                            checked={h.completedToday}
-                            onChange={() => onToggle(h.id)}
-                            className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <span className={"text-gray-800"}>{h.title}</span>
-                    </label>
-
-                    <div className="flex items-center gap-3">
-                        <span className="text-xs text-gray-500">🔥 {h.streak}d</span>
-                        <button
-                            className="text-sm text-indigo-600 hover:underline"
-                            onClick={() => {
-                                const next = prompt("Rename habit", h.title);
-                                if (next !== null) onEdit(h.id, next.trim());
-                            }}
-                        >
-                            Edit
-                        </button>
-                        <button
-                            className="text-sm text-red-600 hover:underline"
-                            onClick={() => onDelete(h.id)}
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </li>
+                <HabitItem
+                    key={h.id}
+                    id={h.id}
+                    title={h.title}
+                    completedToday={h.completedToday}
+                    streak={h.streak}
+                    onToggle={onToggle}
+                    onDelete={onDelete}
+                    onEdit={onEdit}
+                />
             ))}
         </ul>
     );

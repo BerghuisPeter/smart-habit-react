@@ -57,7 +57,16 @@ export const Navbar = () => {
 
                 <input id="menu-toggle" type="checkbox" className="peer hidden"/>
 
-                {/* Burger button */}
+                {/* Click-away overlay */}
+                <label htmlFor="menu-toggle"
+                       className="fixed inset-0 z-40 md:hidden
+                        bg-black/30 opacity-0 pointer-events-none
+                        transition-opacity duration-200
+                        peer-checked:opacity-100 peer-checked:pointer-events-auto
+                      "
+                       aria-hidden="true"
+                />
+
                 <label
                     htmlFor="menu-toggle"
                     className="md:hidden ml-auto p-2 cursor-pointer rounded-lg focus:outline-none focus:ring
@@ -80,7 +89,13 @@ export const Navbar = () => {
                 </label>
 
 
-                <ul className="md:hidden hidden peer-checked:block absolute top-0 right-0 border bg-white px-5 py-3 text-gray-900 shadow-sm h-full w-1/2">
+                <ul className="space-y-3
+                        md:hidden hidden peer-checked:block
+                            fixed inset-y-0 right-0 z-50
+                            flex flex-col gap-2
+                            h-full w-1/2
+                            rounded-l-lg border
+                             bg-white p-3 text-gray-900 shadow-sm">
 
                     <li className="flex justify-end top-3 list-none">
                         <label
@@ -90,8 +105,10 @@ export const Navbar = () => {
                         >
                             <span className="sr-only">Close</span>
                             <div className="relative h-5 w-5">
-                                <span className="absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 rotate-45 bg-current"></span>
-                                <span className="absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 -rotate-45 bg-current"></span>
+                                <span
+                                    className="absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 rotate-45 bg-current"></span>
+                                <span
+                                    className="absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 -rotate-45 bg-current"></span>
                             </div>
                         </label>
                     </li>

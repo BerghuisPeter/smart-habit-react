@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from "react";
+import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { Card } from "../../shared/components/Card.tsx";
 import { Stat } from "./components/Stat.tsx";
 import type { Habit } from "./model/types.ts";
@@ -43,6 +43,18 @@ function Dashboard() {
         return { total, done, longest };
     }, [habits]);
 
+    const handleToggle = useCallback((id: string) => {
+        dispatch({ type: "TOGGLE_TODAY", id });
+    }, []);
+
+    const handleDelete = useCallback((id: string) => {
+        dispatch({ type: "DELETE", id });
+    }, []);
+
+    const handleEdit = useCallback((id: string, title: string) => {
+        dispatch({ type: "EDIT", id, title });
+    }, []);
+
     return (
         <div className="max-w-5xl mx-auto space-y-6">
             <header className="flex flex-col gap-4 md:flex-row md:justify-between">
@@ -76,9 +88,9 @@ function Dashboard() {
                 <h2 className="text-lg font-semibold mb-3">Today</h2>
                 <HabitList
                     habits={habits}
-                    onToggle={id => dispatch({ type: "TOGGLE_TODAY", id })}
-                    onDelete={id => dispatch({ type: "DELETE", id })}
-                    onEdit={(id, title) => dispatch({ type: "EDIT", id, title })}
+                    onToggle={handleToggle}
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
                 />
             </Card>
 
