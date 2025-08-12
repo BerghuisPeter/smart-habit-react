@@ -1,22 +1,36 @@
-import { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormInput } from "../../../shared/components/FormInput.tsx";
 
-export const HabitForm = ({ onAdd }: Readonly<{ onAdd: (title: string) => void }>) => {
+export const HabitForm = React.memo(function HabitForm({
+                                                           onAdd,
+                                                       }: Readonly<{ onAdd: (title: string) => void }>) {
     const [title, setTitle] = useState("");
+
+    const onTitleChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setTitle(e.target.value);
+        },
+        []
+    );
+
+    const handleSubmit = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            if (!title.trim()) return;
+            onAdd(title);
+            setTitle("");
+        },
+        [onAdd, title]
+    );
+
     return (
-        <form
-            onSubmit={e => {
-                e.preventDefault();
-                onAdd(title);
-                setTitle("");
-            }}
-            className="flex flex-col gap-2 md:flex-row"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:flex-row">
             <FormInput
                 id="habit"
                 value={title}
                 placeholder="Add a new habit…"
-                onChange={e => setTitle(e.target.value)} />
+                onChange={onTitleChange}
+            />
             <button
                 type="submit"
                 className="rounded-lg bg-indigo-600 text-white px-4 py-2 disabled:opacity-50"
@@ -26,4 +40,4 @@ export const HabitForm = ({ onAdd }: Readonly<{ onAdd: (title: string) => void }
             </button>
         </form>
     );
-}
+});
