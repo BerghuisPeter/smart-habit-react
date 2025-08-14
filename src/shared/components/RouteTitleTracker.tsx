@@ -1,21 +1,21 @@
 import { useEffect } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
-import { ROUTES } from '../constants/routes';
+import { flattenRoutesWithNoIndex, ROUTES } from '../constants/routes';
+
+const FLAT_ROUTES = flattenRoutesWithNoIndex(ROUTES);
 
 const RouteTitleTracker = () => {
-    const location = useLocation();
+    const { pathname } = useLocation();
 
     useEffect(() => {
-        const matchedRoute = ROUTES.find(route =>
-            matchPath(route.path, location.pathname)
+        const matched = FLAT_ROUTES.find(r =>
+            matchPath({ path: r.path!, end: true }, pathname)
         );
 
-        if (matchedRoute?.title) {
-            document.title = `${import.meta.env.VITE_APP_TITLE} - ${matchedRoute.title}`;
-        } else {
-            document.title = import.meta.env.VITE_APP_TITLE; // fallback
-        }
-    }, [location.pathname]);
+        document.title = matched?.title
+            ? `${import.meta.env.VITE_APP_TITLE} - ${matched.title}`
+            : import.meta.env.VITE_APP_TITLE;
+    }, [pathname]);
 
     return null;
 };

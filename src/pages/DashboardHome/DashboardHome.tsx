@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react";
+import type { Habit } from "./model/types.ts";
 import { Card } from "../../shared/components/Card.tsx";
 import { Stat } from "./components/Stat.tsx";
-import type { Habit } from "./model/types.ts";
+import { HabitForm } from "./components/HabitForm.tsx";
 import HabitList from "./components/HabitList.tsx";
 import { habitReducer } from "./model/habitReducer.ts";
-import { HabitForm } from "./components/HabitForm.tsx";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_PATHS } from "../../shared/constants/routes.tsx";
 
 
 // -------------------- Local Storage, normally fetched from API--------------------
@@ -18,9 +20,9 @@ function loadHabits(): Habit[] {
     }
 }
 
-
-function Dashboard() {
+export function DashboardHome() {
     const [habits, dispatch] = useReducer(habitReducer, [], loadHabits);
+    const navigate = useNavigate();
 
     // persist
     useEffect(() => {
@@ -34,6 +36,8 @@ function Dashboard() {
         const timer = setTimeout(() => dispatch({ type: "RESET_TODAY" }), msTillMidnight);
         return () => clearTimeout(timer);
     }, []);
+
+
 
     // stats
     const stats = useMemo(() => {
@@ -55,32 +59,22 @@ function Dashboard() {
         dispatch({ type: "EDIT", id, title });
     }, []);
 
-    return (
-        <div className="max-w-5xl mx-auto space-y-6">
-            <header className="flex flex-col gap-4 md:flex-row md:justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-center md:text-left">📊 Your Dashboard</h1>
-                    <p className="text-gray-600 text-center md:text-left">Track habits, watch streaks, and keep momentum.</p>
-                </div>
-                <button
-                    className="rounded-lg border px-3 py-2 text-sm hover:bg-gray-50"
-                    onClick={() => dispatch({ type: "RESET_TODAY" })}
-                    title="Uncheck all for today"
-                >
-                    Reset Today
-                </button>
-            </header>
+    const goToInsightsPage = ()=> {
+        navigate(ROUTE_PATHS.DASHBOARD_INSIGHTS);
+    }
 
+    return (
+        <>
             {/* Stats */}
             <section className="grid gap-4 sm:grid-cols-3">
-                <Card><Stat label="Habits Today" value={`${stats.done}/${stats.total}`} /></Card>
-                <Card><Stat label="Total Habits" value={stats.total} /></Card>
-                <Card><Stat label="Longest Streak" value={`${stats.longest} days`} /></Card>
+                <Card><Stat label="Habits Today" value={`${stats.done}/${stats.total}`}/></Card>
+                <Card><Stat label="Total Habits" value={stats.total}/></Card>
+                <Card><Stat label="Longest Streak" value={`${stats.longest} days`}/></Card>
             </section>
 
             {/* Add Habit */}
             <Card>
-                <HabitForm onAdd={title => dispatch({ type: "ADD", title })} />
+                <HabitForm onAdd={title => dispatch({ type: "ADD", title })}/>
             </Card>
 
             {/* Habit List */}
@@ -95,7 +89,7 @@ function Dashboard() {
             </Card>
 
             {/* Quick Actions */}
-            <section className="grid gap-3 sm:grid-cols-2">
+            <section className="grid gap-3 sm:grid-cols-3">
                 <button
                     className="rounded-xl bg-indigo-600 text-white px-4 py-3 font-medium hover:bg-indigo-700"
                     onClick={() => {
@@ -115,10 +109,12 @@ function Dashboard() {
                 >
                     Add Random Habit
                 </button>
+                <button className="rounded-xl border px-4 py-3 font-medium bg-indigo-600 hover:bg-indigo-700"
+                        onClick={goToInsightsPage}
+                >
+                    go to insights
+                </button>
             </section>
-        </div>
+        </>
     );
 }
-
-
-export default Dashboard

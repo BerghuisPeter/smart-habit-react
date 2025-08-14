@@ -9,17 +9,24 @@ type User = {
     role: string;
 };
 
-const AuthProvider = ({ children }: { children: ReactNode }) => {
-
-    useEffect(() => {
+function getInitialUser(): User | null {
+    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+    if (!token) return null;
+    try {
         const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
         if (token) {
-            const decodedUser = jwtDecode<User>(token);
-            setUser(decodedUser);
-        }
-    }, []);
+            return jwtDecode<User>(token);
+        } else
+            return null;
+    } catch {
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+        return null;
+    }
+}
 
-    const [user, setUser] = useState<User | null>(null);
+const AuthProvider = ({ children }: { children: ReactNode }) => {
+
+    const [user, setUser] = useState<User | null>(getInitialUser());
 
     const login = useCallback(async (email: string, password: string) => {
         if (email && password) {
