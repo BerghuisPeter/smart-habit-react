@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../shared/hooks/useAuth.ts";
-import { ROUTE_PATHS } from "../shared/constants/routes.tsx";
 import { FormInput } from "../shared/components/FormInput.tsx";
 import { validateAll, validateField } from "../shared/utils/formValidators.ts";
+import { ROUTE_PATHS } from "../routes/paths.ts";
 
 function Login() {
     const [email, setEmail] = useState('');

@@ -8,7 +8,8 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@pages/*": ["pages/*"]
     }
   }
 }

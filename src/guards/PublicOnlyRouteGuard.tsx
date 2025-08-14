@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../shared/hooks/useAuth.ts";
-import { ROUTE_PATHS } from "../shared/constants/routes.tsx";
+import { ROUTE_PATHS } from "../routes/paths.ts";
 
 export const PublicOnlyRouteGuard = ({ children }: { children: JSX.Element }) => {
     const { user } = useAuth();

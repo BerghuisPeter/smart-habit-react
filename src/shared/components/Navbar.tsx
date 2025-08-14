@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import { useAuth } from "../hooks/useAuth.ts";
-import { ROUTE_PATHS } from "../constants/routes.tsx";
+import { ROUTE_PATHS } from "../../routes/paths.ts";
 
 export const Navbar = () => {
 

@@ -6,11 +6,12 @@ import { HabitForm } from "./components/HabitForm.tsx";
 import HabitList from "./components/HabitList.tsx";
 import { habitReducer } from "./model/habitReducer.ts";
 import { useNavigate } from "react-router-dom";
-import { ROUTE_PATHS } from "../../shared/constants/routes.tsx";
+import { toDashboardInsights } from "../../routes/paths.ts";
 
 
 // -------------------- Local Storage, normally fetched from API--------------------
 const LS_KEY = "smarthabit.habits";
+
 function loadHabits(): Habit[] {
     try {
         const raw = localStorage.getItem(LS_KEY);
@@ -38,7 +39,6 @@ export function DashboardHome() {
     }, []);
 
 
-
     // stats
     const stats = useMemo(() => {
         const total = habits.length;
@@ -59,8 +59,8 @@ export function DashboardHome() {
         dispatch({ type: "EDIT", id, title });
     }, []);
 
-    const goToInsightsPage = ()=> {
-        navigate(ROUTE_PATHS.DASHBOARD_INSIGHTS);
+    const goToInsightsPage = () => {
+        navigate(toDashboardInsights());
     }
 
     return (
